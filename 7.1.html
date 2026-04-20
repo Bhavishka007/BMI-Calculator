@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* Container Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #4a148c;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #666;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #764ba2;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #5e35b1;
+        }
+
+        /* Result Area */
+        #result {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            min-height: 1.5em;
+            color: #2e7d32; /* Default Green */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <p>Enter your details below to check your health status.</p>
+        
+        <div style="margin-top: 20px;">
+            <p>Weight (kg)</p>
+            <input type="number" id="wt" placeholder="eg. 80">
+            
+            <p>Height (cm)</p>
+            <input type="number" id="ht" placeholder="eg. 170">
+            
+            <button onclick="calculateBMI()">Calculate BMI</button>
+        </div>
+
+        <h2 id="result">Your BMI will appear here</h2>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const weight = document.getElementById("wt").value;
+            const heightCm = document.getElementById("ht").value;
+
+            // Simple validation
+            if (weight <= 0 || heightCm <= 0) {
+                document.getElementById("result").innerText = "Please enter valid numbers.";
+                document.getElementById("result").style.color = "red";
+                return;
+            }
+
+            const heightM = heightCm / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+            let message = "";
+            let color = "";
+
+            if (bmi < 18.5) {
+                message = " (Underweight)";
+                color = "#fbc02d"; // Yellow
+            } else if (bmi < 25) {
+                message = " (Normal)";
+                color = "#2e7d32"; // Green
+            } else if (bmi < 30) {
+                message = " (Overweight)";
+                color = "#ef6c00"; // Orange
+            } else {
+                message = " (Obese)";
+                color = "#c62828"; // Red
+            }
+
+            const resultEl = document.getElementById("result");
+            resultEl.innerText = "Your BMI is " + bmi + message;
+            resultEl.style.color = color;
+        }
+    </script>
+</body>
+</html>
